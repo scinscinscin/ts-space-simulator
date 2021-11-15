@@ -74,7 +74,7 @@ export class Rocket extends TrajectoryBody {
     override getCurrentTorques() {
         const percentage = this.getKeyAtTime(this.simulationSecond, "angular");
         const force = this.maxTorque * percentage; // force applied based on key
-        let torque = (force * Math.sin(90) * this.length) / 2;
+        let torque = (force * Math.sin(Math.PI / 2) * this.length) / 2;
         return torque;
     }
 
