@@ -33,7 +33,7 @@ export class Rocket extends TrajectoryBody {
         super(startingTrajectoryData, length);
         this.exhaustVelocity = rocketParams.exhaustVelocity ?? 100; // default to 100m
         this.fuelBurnRate = rocketParams.fuelBurnRate ?? 10; // default to 10kg/s
-        this.maxTorque = rocketParams.maxTorque ?? 223.71; // default to 200 kg * m^2 / s^2 * rad
+        this.maxTorque = rocketParams.maxTorque ?? 200; // default to 200 kg * m^2 / s^2 * rad
 
         this.linearThrustKeys = thrustKeyIsSimple(thrustKeys.linear)
             ? Tuple.convertSimpleKeysToLerpable(thrustKeys.linear)
