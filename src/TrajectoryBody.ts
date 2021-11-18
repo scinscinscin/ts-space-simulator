@@ -41,14 +41,47 @@ export class TrajectoryBody {
         const force = this.getCurrentForces(planets);
         const acceleration = force.divide(this.current_tdata.mass);
         const newVelocity = this.current_tdata.velocity.add(acceleration);
-        const newPos = this.current_tdata.position.add(newVelocity);
 
         this.updateMass();
 
+        let intersection: Tuple | undefined;
+        let planetHit: Planet | undefined;
+        for (const planet of planets) {
+            const possibleIntersection = SuperMath.collisionDetection(
+                this.current_tdata.position,
+                newVelocity,
+                planet.getLerpableTupleAtTime(
+                    this.simulationSecond,
+                    "position"
+                ),
+                planet.radius
+            );
+
+            if (possibleIntersection !== undefined) {
+                intersection = possibleIntersection;
+                planetHit = planet;
+                break;
+            }
+        }
+
+        if (intersection === undefined) {
+            const newPos = this.current_tdata.position.add(newVelocity);
+            this.current_tdata.position = newPos;
+            this.current_tdata.velocity = newVelocity;
+        } else {
+            if (planetHit === undefined)
+                throw new Error("undefined planet hit");
+
+            // apply inelastic collision
+            this.current_tdata.position = intersection;
+            this.current_tdata.velocity = planetHit.getLerpableTupleAtTime(
+                this.simulationSecond,
+                "velocity"
+            );
+        }
+
         this.current_tdata.force = force;
         this.current_tdata.acceleration = acceleration;
-        this.current_tdata.velocity = newVelocity;
-        this.current_tdata.position = newPos;
 
         this.overallTrajectory.push(this.current_tdata.clone());
         this.simulationSecond++;

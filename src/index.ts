@@ -11,9 +11,8 @@ function main() {
 
     const rocketParams: RocketParameters = {};
     const thrustKeys: ThrustKeys = {
-        angular: [0.1, 0, -0.2, 0, 0.1, 0],
-        linear: [1, 1, 1, 1, 1, 1],
-        //linear: [0, 0, 0, 0, 0, 0],
+        angular: Rocket.generateBlankThrustKeys(20, 0),
+        linear: Rocket.generateBlankThrustKeys(20, 0),
     };
 
     const rocket = new Rocket(
@@ -35,7 +34,8 @@ function main() {
     console.log("Initial trajectory data");
     rocket.getCurrentTrajectory().printToConsole();
 
-    for (let i = 0; i < 4; i++) {
+    const simulationLength = rocket.linearThrustKeys.length;
+    for (let i = 0; i < simulationLength; i++) {
         console.log("Calculating for iteration", i);
         rocket.calculateNext(planets);
         rocket.getCurrentTrajectory().printToConsole();

@@ -1,6 +1,7 @@
 import { Tuple } from "./Tuple";
 
-export type LerpableTuples = "position" | "velocity";
+// list of properties of TrajectoryData class whos type are Tuples
+export type LerpableTuples = "position" | "velocity" | "acceleration";
 
 export interface TrajectoryDataParameters {
     mass: number;

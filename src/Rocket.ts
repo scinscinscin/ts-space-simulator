@@ -115,6 +115,12 @@ export class Rocket extends TrajectoryBody {
 
         return cache;
     }
+
+    static generateBlankThrustKeys(simulLength: number, defaultThrust = 0) {
+        let response: number[] = [];
+        for (let i = 0; i < simulLength; i++) response.push(defaultThrust);
+        return response;
+    }
 }
 
 function thrustKeyIsSimple(a: ThrustKeys["linear"]): a is number[] {
