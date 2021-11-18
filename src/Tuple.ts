@@ -41,7 +41,9 @@ export class Tuple {
 
     static dirFromAngle = (theta: number): Tuple => {
         const radians = SuperMath.degToRad(theta);
-        return new Tuple(Math.cos(radians), Math.sin(radians));
+        const x = SuperMath.epsilonRound(Math.cos(radians), 6);
+        const y = SuperMath.epsilonRound(Math.sin(radians), 6);
+        return new Tuple(x, y);
     };
 
     static lerp = (a: Tuple, b: Tuple, t: number) => {
